@@ -1,27 +1,31 @@
 package main
 
 import (
+	"context"
 	"fmt"
-
-	"github.com/primeiro/exemplos"
+	"time"
 )
-
-
 
 func main() {
 
-	/*jsonData := `{"id": 1, "nome": "Produto 1", "preco": 10.0, "quantidade": 5}`	
-	var produto Produto
-	err :=json.Unmarshal([]byte(jsonData), &produto)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}*/
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 
-	produto := exemplos.NewProduto(1, "Produto 1", 10.0, 5)
+	ctx = context.WithValue(ctx, "key", "value")
 
-	fmt.Println("ID:", produto.ID)
-	fmt.Println("Nome:", produto.Nome)	
-	fmt.Println("Preço:", produto.Preco)
-	fmt.Println("Quantidade:", produto.Quantidade)
+	defer func() {
+		if err := recover(); err != nil {	
+			fmt.Println("Recover:", err)}
+	}()
+
+	fmt.Println("Iniciando processamento")
+
+	processar(ctx)
+}
+
+func processar(ctx context.Context) {
+	tenantId := ctx.Value("tenantId")
+	fmt.Println("Processando Tenant ID:", tenantId)
+	time.Sleep(2 * time.Second)
+	fmt.Println("Processamento concluído")
 }

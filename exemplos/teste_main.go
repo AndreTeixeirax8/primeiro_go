@@ -18,7 +18,7 @@ func faixaEtaria (idade int) string {
 		
 	}
 
-func main() {
+func main2() {
 	fmt.Println("Hello, World!")
 
 	var nome string = "Lucas"
