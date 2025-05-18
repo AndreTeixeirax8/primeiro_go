@@ -1,48 +1,27 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
 
-const masculino = "masculino"
-const feminino = "feminino"
-
-const (
-	maiorIdade = 18
-	menorIdade = 17
+	"github.com/primeiro/exemplos"
 )
 
-func faixaEtaria (idade int) string {
-		if idade < 18 {
-			return "Menor de idade"
-		} else if idade >= 18 && idade <= 65 {
-			return "Adulto"
-		} else {
-			return "Idoso"
-		}
-		
-	}
+
 
 func main() {
-	fmt.Println("Hello, World!")
 
-	var nome string = "Lucas"
-	idade := 20 //Aqui fica a variavel fica tipada automaticamente de acordo com o valor atribuido
-	idade=36 // Aqui a variavel idade é reatribuida com um novo valor como um inteiro
+	/*jsonData := `{"id": 1, "nome": "Produto 1", "preco": 10.0, "quantidade": 5}`	
+	var produto Produto
+	err :=json.Unmarshal([]byte(jsonData), &produto)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}*/
 
-	fmt.Println("Meu nome é", nome, "e tenho", idade, "anos.")
+	produto := exemplos.NewProduto(1, "Produto 1", 10.0, 5)
 
- if idade >= maiorIdade {
-		fmt.Println("Você é maior de idade")
-	}	 else {
-		fmt.Println("Você é menor de idade")
-	} 
-
-	var filhos[3]string = [3]string{"Lucas", "Maria", "João"}
-
-	for i := 0; i < len(filhos); i++ {
-		fmt.Println("Filho", i+1, ":", filhos[i])
-	}
-
-	fmt.Println(faixaEtaria(50))
-
-
+	fmt.Println("ID:", produto.ID)
+	fmt.Println("Nome:", produto.Nome)	
+	fmt.Println("Preço:", produto.Preco)
+	fmt.Println("Quantidade:", produto.Quantidade)
 }
