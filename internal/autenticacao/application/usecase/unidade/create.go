@@ -19,7 +19,7 @@ func NewCreateUnidadeUseCase() *CreateUnidadeUseCase {
 	return &CreateUnidadeUseCase{}
 }
 
-func (uc *CreateUnidadeUseCase) Execute(input CreateUnidadeInputDTO) (*CreateUnidadeOutputDTO, error) {
+func (uc *CreateUnidadeUseCase) Execute(input *CreateUnidadeInputDTO) (*CreateUnidadeOutputDTO, error) {
 	unidade, err := entity.NewUnidade(input.Nome, input.Cnpj, input.Email, input.QtdSilos)
 	if err != nil {
 		return nil, err
