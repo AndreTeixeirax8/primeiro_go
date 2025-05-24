@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/joho/godotenv"
-	apiHandler "github.com/primeiro/internal/autenticacao/infra/http"
+	apiHandler "github.com/primeiro/internal/infra/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
