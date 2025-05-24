@@ -6,12 +6,13 @@ import (
 )
 
 type Unidade struct {
-	ID       string `json:"id"`        // ID da unidade
-	Nome     string `validate:"required, min=3, max=100" json:"nome"`      // Nome da unidade
-	Cnpj     string `json:"cnpj"`      // CNPJ da unidade
-	Email    string `validate:"email" json:"email"`     // Email da unidade
-	QtdSilos int    `validate:"min=0" json:"qtd_silos"` // Quantidade de silos da unidade
+	ID       string `json:"id"` // ID da unidade
+	Nome     string `json:"nome" validate:"required,min=3,max=100"`
+	Cnpj     string `json:"cnpj"` // CNPJ da unidade
+	Email    string `json:"email" validate:"email"` // Email da unidade
+	QtdSilos int    `json:"qtd_silos" validate:"min=0"` // Quantidade de silos
 }
+
 
 func NewUnidade( nome, cnpj, email string, qtdSilos int) (*Unidade,error) {
 	unidade := &Unidade{
