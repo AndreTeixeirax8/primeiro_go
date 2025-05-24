@@ -1,7 +1,54 @@
 package apiHandler
 
-import "fmt"
+import (
+	"net/http"
 
-func RunAutenticacaoApi() {
-	fmt.Println("Executando o serviço de autenticação")
+	"github.com/go-chi/chi/v5"
+)
+
+type ApiHttpHandler struct {
+	r *chi.Mux	
+}
+
+func NewApiHttpHandler(r *chi.Mux) *ApiHttpHandler {
+	
+	return &ApiHttpHandler{r: r}
+}
+
+func (s *ApiHttpHandler)RunAutenticacaoApi() {
+	s.r.Route("/autenticacao", func(r chi.Router) {
+		
+		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+
+			w.Write([]byte("Autenticacao API"))
+		})
+		
+	})
+
+
+}
+
+func (s *ApiHttpHandler)RunCadastroApi() {
+	s.r.Route("/cadastro", func(r chi.Router) {
+
+		r.Route("/unidade", func(r chi.Router) {
+
+		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("GET unidade Autenticacao API"))
+		})
+
+		r.Post("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("POST unidadeAutenticacao API"))
+		})
+
+		r.Get("/{id}", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Get id Unidade Autenticacao API"))
+		})
+
+
+		})
+		
+	})
+
+
 }

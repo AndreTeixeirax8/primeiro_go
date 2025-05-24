@@ -13,7 +13,7 @@ type Unidade struct {
 	QtdSilos int    `validate:"min=0" json:"qtd_silos"` // Quantidade de silos da unidade
 }
 
-func NweUnidade( nome, cnpj, email string, qtdSilos int) (*Unidade,error) {
+func NewUnidade( nome, cnpj, email string, qtdSilos int) (*Unidade,error) {
 	unidade := &Unidade{
 		ID:       xid.New().String(),
 		Nome:     nome,
