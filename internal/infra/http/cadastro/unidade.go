@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/go-chi/chi/v5"
 	usecase "github.com/primeiro/internal/autenticacao/application/usecase/unidade"
 )
 
@@ -36,4 +37,12 @@ func (h *UnidadeHandler) CreateUnidade(w http.ResponseWriter, r *http.Request)(i
 	output, err := h.createUnidadeUsecase.Execute(&input)
 	
 	return output, http.StatusCreated, err
+}
+
+func (h *UnidadeHandler) GetUnidadeById(w http.ResponseWriter, r *http.Request)(interface{},int,error) {
+
+	id := chi.URLParam(r, "id")
+	 input := usecase.GetUnidadeByIdInputDTO{ID: id}
+	output, err := h.getUnidadeByIdUsecase.Execute(&input)
+	return output, http.StatusOK, err
 }

@@ -44,12 +44,11 @@ func (s *ApiHttpHandler)RunCadastroApi() {
 
 		r.Post("/", wrapper.HandleError(unidadeHandler.CreateUnidade) )
 
-		r.Get("/{id}", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Get id Unidade Autenticacao API"))
+		r.Get("/{id}", wrapper.HandleError(unidadeHandler.GetUnidadeById) )
 		})
 
 
-		})
+		
 		
 	})
 

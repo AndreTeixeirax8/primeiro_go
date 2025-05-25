@@ -21,7 +21,7 @@ func NewGetUnidadeByIdUsecase() *GetUnidadeByIdUsecase {
 	return &GetUnidadeByIdUsecase{}
 }
 
-func (uc *GetUnidadeByIdUsecase) Execute(input GetUnidadeByIdInputDTO) (*GetUnidadeByIdOutputDTO, error) {
+func (uc *GetUnidadeByIdUsecase) Execute(input *GetUnidadeByIdInputDTO) (*GetUnidadeByIdOutputDTO, error) {
 	
 	unidadeMock := entity.Unidade{
 		ID:       "1",
