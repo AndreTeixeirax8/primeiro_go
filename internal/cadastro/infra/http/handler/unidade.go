@@ -46,3 +46,12 @@ func (h *UnidadeHandler) GetUnidadeById(w http.ResponseWriter, r *http.Request)(
 	output, err := h.getUnidadeByIdUsecase.Execute(&input)
 	return output, http.StatusOK, err
 }
+
+func (h *UnidadeHandler) ListUnidades(w http.ResponseWriter, r *http.Request)(interface{},int,error) {
+	output, err := h.listUnidadeUsecase.Execute()
+	if err != nil {
+		return nil, http.StatusInternalServerError, err
+	}
+
+	return output, http.StatusOK, nil
+}

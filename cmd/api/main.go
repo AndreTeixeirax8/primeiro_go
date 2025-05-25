@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/joho/godotenv"
-	apiHandler "github.com/primeiro/internal/infra/http"
+	apiHandlerCadastro "github.com/primeiro/internal/cadastro/infra/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -53,7 +53,7 @@ func main() {
 	}))
 	
 
-	apiHandler := apiHandler.NewApiHttpHandler(r)
+	apiHandler := apiHandlerCadastro.NewApiHttpHandler(r)
 
 	if servicoAutenticacaoAtivo {
 		apiHandler.RunAutenticacaoApi()

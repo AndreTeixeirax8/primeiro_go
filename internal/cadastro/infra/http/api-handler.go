@@ -4,7 +4,8 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	handler "github.com/primeiro/internal/infra/http/cadastro"
+
+	"github.com/primeiro/internal/cadastro/infra/http/handler"
 	"github.com/primeiro/pkg/wrapper"
 )
 
@@ -38,18 +39,12 @@ func (s *ApiHttpHandler)RunCadastroApi() {
 
 		r.Route("/unidade", func(r chi.Router) {
 
-		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("GET unidade Autenticacao API"))
-		})
-
-		r.Post("/", wrapper.HandleError(unidadeHandler.CreateUnidade) )
-
-		r.Get("/{id}", wrapper.HandleError(unidadeHandler.GetUnidadeById) )
-		})
-
-
+			r.Post("/", wrapper.HandleError(unidadeHandler.CreateUnidade) )
+			r.Get("/", wrapper.HandleError(unidadeHandler.ListUnidades) )
+			r.Get("/{id}", wrapper.HandleError(unidadeHandler.GetUnidadeById) )
+			})
 		
-		
+	
 	})
 
 
