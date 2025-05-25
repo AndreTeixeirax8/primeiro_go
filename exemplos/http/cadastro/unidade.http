@@ -1,6 +1,7 @@
 
 ###
 GET http://localhost:3000/cadastro/unidade
+X-API-Key:123456
 
 ###
 POST http://localhost:3000/cadastro/unidade
