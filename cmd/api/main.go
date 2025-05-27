@@ -8,6 +8,8 @@ import (
 
 	"github.com/joho/godotenv"
 	apiHandlerCadastro "github.com/primeiro/internal/cadastro/infra/http"
+	"github.com/primeiro/internal/infra/database"
+	"github.com/primeiro/internal/infra/database/migrations"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -24,19 +26,21 @@ func main() {
 		}
 	}
 
-
-
-
-	servicoAutenticacaoAtivo , err :=  strconv.ParseBool(os.Getenv("SERVICO_AUTENTICACAO"))
-	if err != nil {
-		servicoAutenticacaoAtivo =true
+	database.InitDB()
+	if err := migrations.RunMigrations(); err != nil {
+		logger.Println("Erro ao executar migrações: ", err)
+		panic(err)
 	}
-	
-	servicoCadastroAtivo , err :=  strconv.ParseBool(os.Getenv("SERVICO_CADASTRO"))
+
+	servicoAutenticacaoAtivo, err := strconv.ParseBool(os.Getenv("SERVICO_AUTENTICACAO"))
 	if err != nil {
-		servicoCadastroAtivo =true
+		servicoAutenticacaoAtivo = true
 	}
-	
+
+	servicoCadastroAtivo, err := strconv.ParseBool(os.Getenv("SERVICO_CADASTRO"))
+	if err != nil {
+		servicoCadastroAtivo = true
+	}
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
@@ -47,11 +51,10 @@ func main() {
 		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token", "X-Requested-With"},
-	     ExposedHeaders:   []string{"Link"}, // Add this line to expose the Link header
+		ExposedHeaders:   []string{"Link"}, // Add this line to expose the Link header
 		AllowCredentials: true,
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	}))
-	
 
 	apiHandler := apiHandlerCadastro.NewApiHttpHandler(r)
 
@@ -67,10 +70,9 @@ func main() {
 		logger.Println("Serviço de cadastro inativo")
 	}
 
-
 	logger.Println("Iniciando servidor na porta " + os.Getenv("PORT"))
 	// Inicia o servidor HTTP
-	err= http.ListenAndServe(":" + os.Getenv("PORT"), r)
+	err = http.ListenAndServe(":"+os.Getenv("PORT"), r)
 	if err != nil {
 		logger.Println("Erro ao iniciar servidor: ", err)
 		panic(err)
