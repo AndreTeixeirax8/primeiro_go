@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Ceres",
+      "type": "go",
+      "request": "launch",
+      "mode": "debug",
+      "program": "${workspaceFolder}/cmd/api/main.go",
+      "args": [],
+      "env": {
+        "SERVICO_AUTETICACAO": "true",
+        "SERVICO_CADASTRO": "true",
+        "SERVICO_TERMOMETRIA": "true",
+        "PORT": "3000",
+        "API_KEY": "123456"
+      },
+      "showLog": true,
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
