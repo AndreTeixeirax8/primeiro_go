@@ -7,9 +7,10 @@ import (
 	"strconv"
 
 	"github.com/joho/godotenv"
-	apiHandlerCadastro "github.com/primeiro/internal/cadastro/infra/http"
+
 	"github.com/primeiro/internal/infra/database"
 	"github.com/primeiro/internal/infra/database/migrations"
+	apiHandlerCadastro "github.com/primeiro/internal/modules/cadastro/infra/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"

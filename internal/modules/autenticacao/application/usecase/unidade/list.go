@@ -1,12 +1,9 @@
 package usecase
 
-import "github.com/primeiro/internal/autenticacao/domain/entity"
-
-
-
+import "github.com/primeiro/internal/modules/autenticacao/domain/entity"
 
 type ListUnidadeOutputDTO struct {
-	ID string `json:"id"` // ID da unidade
+	ID       string `json:"id"`        // ID da unidade
 	Nome     string `json:"nome"`      // Nome da unidade
 	Cnpj     string `json:"cnpj"`      // CNPJ da unidade
 	Email    string `json:"email"`     // Email da unidade
@@ -15,19 +12,19 @@ type ListUnidadeOutputDTO struct {
 type ListUnidadeUsecase struct {
 }
 
-func NewListUnidadesUsecase() *ListUnidadeUsecase{
+func NewListUnidadesUsecase() *ListUnidadeUsecase {
 	return &ListUnidadeUsecase{}
 }
 
 func (uc *ListUnidadeUsecase) Execute() (*[]ListUnidadeOutputDTO, error) {
-	
+
 	unidadeMock := []entity.Unidade{
 		{
-		ID:       "1",
-		Nome:     "Unidade 1",
-		Cnpj:     "12345678000195",
-		Email:    "joao@teste.com.br",
-		QtdSilos: 10,
+			ID:       "1",
+			Nome:     "Unidade 1",
+			Cnpj:     "12345678000195",
+			Email:    "joao@teste.com.br",
+			QtdSilos: 10,
 		},
 		{
 			ID:       "2",
@@ -39,16 +36,15 @@ func (uc *ListUnidadeUsecase) Execute() (*[]ListUnidadeOutputDTO, error) {
 	}
 
 	unidades := make([]ListUnidadeOutputDTO, len(unidadeMock))
-	for i, unidade := range unidadeMock {	
+	for i, unidade := range unidadeMock {
 		unidades[i] = ListUnidadeOutputDTO{
-			ID:       unidade.ID,	
+			ID:       unidade.ID,
 			Nome:     unidade.Nome,
 			Cnpj:     unidade.Cnpj,
 			Email:    unidade.Email,
 			QtdSilos: unidade.QtdSilos,
 		}
 	}
-
 
 	return &unidades, nil
 }

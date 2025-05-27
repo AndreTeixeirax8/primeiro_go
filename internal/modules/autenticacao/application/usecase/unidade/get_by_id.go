@@ -1,14 +1,13 @@
 package usecase
 
-import "github.com/primeiro/internal/autenticacao/domain/entity"
+import "github.com/primeiro/internal/modules/autenticacao/domain/entity"
 
 type GetUnidadeByIdInputDTO struct {
 	ID string `json:"id"` // ID da unidade
 }
 
-
 type GetUnidadeByIdOutputDTO struct {
-	ID string `json:"id"` // ID da unidade
+	ID       string `json:"id"`        // ID da unidade
 	Nome     string `json:"nome"`      // Nome da unidade
 	Cnpj     string `json:"cnpj"`      // CNPJ da unidade
 	Email    string `json:"email"`     // Email da unidade
@@ -22,7 +21,7 @@ func NewGetUnidadeByIdUsecase() *GetUnidadeByIdUsecase {
 }
 
 func (uc *GetUnidadeByIdUsecase) Execute(input *GetUnidadeByIdInputDTO) (*GetUnidadeByIdOutputDTO, error) {
-	
+
 	unidadeMock := entity.Unidade{
 		ID:       "1",
 		Nome:     "Unidade 1",

@@ -5,29 +5,28 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	usecase "github.com/primeiro/internal/autenticacao/application/usecase/unidade"
+	usecase "github.com/primeiro/internal/modules/autenticacao/application/usecase/unidade"
 )
 
 type UnidadeHandler struct {
-	createUnidadeUsecase *usecase.CreateUnidadeUseCase
-	getUnidadeByIdUsecase    *usecase.GetUnidadeByIdUsecase
-	listUnidadeUsecase *usecase.ListUnidadeUsecase
-
+	createUnidadeUsecase  *usecase.CreateUnidadeUseCase
+	getUnidadeByIdUsecase *usecase.GetUnidadeByIdUsecase
+	listUnidadeUsecase    *usecase.ListUnidadeUsecase
 }
 
 func NewUnidadeHandler() *UnidadeHandler {
 	createUnidadeUsecase := usecase.NewCreateUnidadeUseCase()
-	getUnidadeByIdUsecase  := usecase.NewGetUnidadeByIdUsecase()
+	getUnidadeByIdUsecase := usecase.NewGetUnidadeByIdUsecase()
 	listUnidadeUsecase := usecase.NewListUnidadesUsecase()
 
 	return &UnidadeHandler{
-		createUnidadeUsecase: createUnidadeUsecase,
+		createUnidadeUsecase:  createUnidadeUsecase,
 		getUnidadeByIdUsecase: getUnidadeByIdUsecase,
-		listUnidadeUsecase: listUnidadeUsecase,
+		listUnidadeUsecase:    listUnidadeUsecase,
 	}
 }
 
-func (h *UnidadeHandler) CreateUnidade(w http.ResponseWriter, r *http.Request)(interface{},int,error) {
+func (h *UnidadeHandler) CreateUnidade(w http.ResponseWriter, r *http.Request) (interface{}, int, error) {
 	var input usecase.CreateUnidadeInputDTO
 
 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
@@ -35,19 +34,19 @@ func (h *UnidadeHandler) CreateUnidade(w http.ResponseWriter, r *http.Request)(i
 	}
 
 	output, err := h.createUnidadeUsecase.Execute(&input)
-	
+
 	return output, http.StatusCreated, err
 }
 
-func (h *UnidadeHandler) GetUnidadeById(w http.ResponseWriter, r *http.Request)(interface{},int,error) {
+func (h *UnidadeHandler) GetUnidadeById(w http.ResponseWriter, r *http.Request) (interface{}, int, error) {
 
 	id := chi.URLParam(r, "id")
-	 input := usecase.GetUnidadeByIdInputDTO{ID: id}
+	input := usecase.GetUnidadeByIdInputDTO{ID: id}
 	output, err := h.getUnidadeByIdUsecase.Execute(&input)
 	return output, http.StatusOK, err
 }
 
-func (h *UnidadeHandler) ListUnidades(w http.ResponseWriter, r *http.Request)(interface{},int,error) {
+func (h *UnidadeHandler) ListUnidades(w http.ResponseWriter, r *http.Request) (interface{}, int, error) {
 	output, err := h.listUnidadeUsecase.Execute()
 	if err != nil {
 		return nil, http.StatusInternalServerError, err

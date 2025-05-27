@@ -1,6 +1,6 @@
 package usecase
 
-import "github.com/primeiro/internal/autenticacao/domain/entity"
+import "github.com/primeiro/internal/modules/autenticacao/domain/entity"
 
 type CreateUnidadeInputDTO struct {
 	Nome     string `json:"nome"`      // Nome da unidade
