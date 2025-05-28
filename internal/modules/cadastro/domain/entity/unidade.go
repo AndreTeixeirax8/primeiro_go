@@ -16,7 +16,7 @@ type Unidade struct {
 }
 
 func (Unidade) TableName() string {
-	return "unidades"
+	return "unidade"
 }
 
 func NewUnidade(nome, cnpj, email string, qtdSilos int) (*Unidade, error) {

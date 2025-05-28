@@ -5,7 +5,9 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	usecase "github.com/primeiro/internal/modules/autenticacao/application/usecase/unidade"
+	"github.com/primeiro/internal/infra/database"
+	repository "github.com/primeiro/internal/infra/database/repository/cadastro"
+	usecase "github.com/primeiro/internal/modules/cadastro/application/usecase/unidade"
 )
 
 type UnidadeHandler struct {
@@ -15,9 +17,12 @@ type UnidadeHandler struct {
 }
 
 func NewUnidadeHandler() *UnidadeHandler {
-	createUnidadeUsecase := usecase.NewCreateUnidadeUseCase()
-	getUnidadeByIdUsecase := usecase.NewGetUnidadeByIdUsecase()
-	listUnidadeUsecase := usecase.NewListUnidadesUsecase()
+
+	unidadeRepo := repository.NewUnidadeRepository(database.DB)
+
+	createUnidadeUsecase := usecase.NewCreateUnidadeUseCase(unidadeRepo)
+	getUnidadeByIdUsecase := usecase.NewGetUnidadeByIdUsecase(unidadeRepo)
+	listUnidadeUsecase := usecase.NewListUnidadesUsecase(unidadeRepo)
 
 	return &UnidadeHandler{
 		createUnidadeUsecase:  createUnidadeUsecase,

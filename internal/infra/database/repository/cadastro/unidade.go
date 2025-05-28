@@ -15,9 +15,12 @@ func NewUnidadeRepository(db *gorm.DB) *UnidadeRepository {
 	}
 }
 
-func (r *UnidadeRepository) Create(unidade *entity.Unidade) error {
-
-	return r.Db.Create(unidade).Error
+func (r *UnidadeRepository) Create(unidade *entity.Unidade) (*entity.Unidade, error) {
+	err := r.Db.Create(unidade).Error
+	if err != nil {
+		return nil, err
+	}
+	return unidade, nil
 }
 
 func (r *UnidadeRepository) GetByID(id string) (*entity.Unidade, error) {
@@ -38,8 +41,12 @@ func (r *UnidadeRepository) GetAll() ([]entity.Unidade, error) {
 	return unidades, nil
 }
 
-func (r *UnidadeRepository) Update(unidade *entity.Unidade) error {
-	return r.Db.Updates(unidade).Error
+func (r *UnidadeRepository) Update(unidade *entity.Unidade) (*entity.Unidade, error) {
+	err := r.Db.Updates(unidade).Error
+	if err != nil {
+		return nil, err
+	}
+	return unidade, nil
 }
 
 func (r *UnidadeRepository) Delete(id string) error {

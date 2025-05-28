@@ -6,14 +6,15 @@ X-API-Key:123456
 ###
 POST http://localhost:3000/cadastro/unidade
 content-type: application/json
+X-API-Key:123456
 
 {
-    "Nome": "sample",
+    "Nome": "Unidade_03",
     "Email":"teste@testes.com"
 }
 
 ###
-GET http://localhost:3000/cadastro/unidade/10
-
+GET http://localhost:3000/cadastro/unidade/d0rgrfagqv14sr3radcg
+X-API-Key:123456
 
 

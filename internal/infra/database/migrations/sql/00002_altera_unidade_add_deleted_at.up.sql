@@ -1,0 +1,5 @@
+ALTER TABLE unidade ADD COLUMN deleted_at TIMESTAMP;
+
+ALTER TABLE unidade ADD COLUMN created_at TIMESTAMP;
+
+ALTER TABLE unidade ADD COLUMN updated_at TIMESTAMP;
