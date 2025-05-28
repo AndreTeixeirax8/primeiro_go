@@ -2,16 +2,18 @@ package repository
 
 import (
 	"github.com/primeiro/internal/modules/cadastro/domain/entity"
+	pkg "github.com/primeiro/pkg/repository"
 	"gorm.io/gorm"
 )
 
 type UnidadeRepository struct {
+	pkg.RepositoryBase[entity.Unidade]
 	Db *gorm.DB
 }
 
 func NewUnidadeRepository(db *gorm.DB) *UnidadeRepository {
 	return &UnidadeRepository{
-		Db: db,
+		RepositoryBase: pkg.RepositoryBase[entity.Unidade]{Db: db},
 	}
 }
 
