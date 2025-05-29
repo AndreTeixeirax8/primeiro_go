@@ -8,12 +8,14 @@ import (
 	"github.com/primeiro/internal/infra/database"
 	repository "github.com/primeiro/internal/infra/database/repository/cadastro"
 	usecase "github.com/primeiro/internal/modules/cadastro/application/usecase/unidade"
+	"github.com/primeiro/pkg/pagination"
 )
 
 type UnidadeHandler struct {
-	createUnidadeUsecase  *usecase.CreateUnidadeUseCase
-	getUnidadeByIdUsecase *usecase.GetUnidadeByIdUsecase
-	listUnidadeUsecase    *usecase.ListUnidadeUsecase
+	createUnidadeUsecase       *usecase.CreateUnidadeUseCase
+	getUnidadeByIdUsecase      *usecase.GetUnidadeByIdUsecase
+	listUnidadeUsecase         *usecase.ListUnidadeUsecase
+	getUnidadePaginatedUsecase *usecase.GetUnidadePaginatedUsecase
 }
 
 func NewUnidadeHandler() *UnidadeHandler {
@@ -23,11 +25,13 @@ func NewUnidadeHandler() *UnidadeHandler {
 	createUnidadeUsecase := usecase.NewCreateUnidadeUseCase(unidadeRepo)
 	getUnidadeByIdUsecase := usecase.NewGetUnidadeByIdUsecase(unidadeRepo)
 	listUnidadeUsecase := usecase.NewListUnidadesUsecase(unidadeRepo)
+	getUnidadePaginatedUsecase := usecase.NewGetUnidadePaginatedUsecase(unidadeRepo)
 
 	return &UnidadeHandler{
-		createUnidadeUsecase:  createUnidadeUsecase,
-		getUnidadeByIdUsecase: getUnidadeByIdUsecase,
-		listUnidadeUsecase:    listUnidadeUsecase,
+		createUnidadeUsecase:       createUnidadeUsecase,
+		getUnidadeByIdUsecase:      getUnidadeByIdUsecase,
+		listUnidadeUsecase:         listUnidadeUsecase,
+		getUnidadePaginatedUsecase: getUnidadePaginatedUsecase,
 	}
 }
 
@@ -58,4 +62,15 @@ func (h *UnidadeHandler) ListUnidades(w http.ResponseWriter, r *http.Request) (i
 	}
 
 	return output, http.StatusOK, nil
+}
+
+func (h *UnidadeHandler) GetUnidadeByPaginated(w http.ResponseWriter, r *http.Request) (interface{}, int, error) {
+	query := r.URL.Query()
+
+	paginationRequest := pagination.GeneratePaginationRequest(query)
+
+	output, err := h.getUnidadePaginatedUsecase.Execute(*paginationRequest)
+
+	return output, http.StatusOK, err
+
 }

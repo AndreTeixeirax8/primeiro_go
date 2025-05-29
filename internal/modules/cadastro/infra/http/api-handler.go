@@ -42,6 +42,7 @@ func (s *ApiHttpHandler) RunCadastroApi() {
 			r.Post("/", wrapper.HandleError(unidadeHandler.CreateUnidade))
 			r.Get("/", wrapper.HandleError(unidadeHandler.ListUnidades))
 			r.Get("/{id}", wrapper.HandleError(unidadeHandler.GetUnidadeById))
+			r.Get("/paginated", wrapper.HandleError(unidadeHandler.GetUnidadeByPaginated))
 		})
 
 	})
