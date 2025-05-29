@@ -3,10 +3,10 @@ package pkg
 import "gorm.io/gorm"
 
 type RepositoryBaseInterface[E interface{}] interface {
-	Create(unidade *E) error
+	Create(unidade *E) (*E, error)
 	GetByID(id string) (*E, error)
 	GetAll() ([]E, error)
-	Update(unidade *E) error
+	Update(unidade *E) (*E, error)
 	Delete(id string) error
 }
 
@@ -14,9 +14,12 @@ type RepositoryBase[E interface{}] struct {
 	Db *gorm.DB
 }
 
-func (r *RepositoryBase[E]) Create(entity *E) error {
-	return r.Db.Create(entity).Error
-
+func (r *RepositoryBase[E]) Create(entity *E) (*E, error) {
+	err := r.Db.Create(entity).Error
+	if err != nil {
+		return nil, err
+	}
+	return entity, nil
 }
 
 func (r *RepositoryBase[E]) GetByID(id string) (*E, error) {
@@ -35,8 +38,12 @@ func (r *RepositoryBase[E]) GetAll() ([]E, error) {
 	return entities, nil
 }
 
-func (r *RepositoryBase[E]) Update(entity *E) error {
-	return r.Db.Updates(entity).Error
+func (r *RepositoryBase[E]) Update(entity *E) (*E, error) {
+	err := r.Db.Updates(entity).Error
+	if err != nil {
+		return nil, err
+	}
+	return entity, nil
 }
 
 func (r *RepositoryBase[E]) Delete(id string) error {
