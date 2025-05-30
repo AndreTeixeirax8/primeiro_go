@@ -103,7 +103,7 @@ func (r *RepositoryBase[E]) GetPaginated(query *pagination.PaginationQuery) (*pa
 		Rows: entities,
 		Meta: pagination.PaginationMeta{
 			TotalRows:   int(totalRows),
-			FromRow:     (query.Page-1)*query.Limit + 1,
+			FromRow:     ((query.Page - 1) * query.Limit) + 1,
 			ToRow:       (query.Page * query.Limit),
 			TotalPages:  int(math.Ceil(float64(totalRows) / float64(query.Limit-1))),
 			PerPage:     query.Limit,
