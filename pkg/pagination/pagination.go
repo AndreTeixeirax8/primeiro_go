@@ -37,7 +37,7 @@ type PaginationResponse[E interface{}] struct {
 func GeneratePaginationRequest(query url.Values) *PaginationQuery {
 
 	limit := 10 // Default limit
-	page := 0   // Default page
+	page := 1   // Default page
 	sort := ""
 	search := ""
 

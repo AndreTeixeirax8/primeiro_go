@@ -4,6 +4,10 @@ GET http://localhost:3000/cadastro/unidade
 X-API-Key:123456
 
 ###
+GET http://localhost:3000/cadastro/unidade/paginated?page=1&limit=10
+X-API-Key:123456
+
+###
 POST http://localhost:3000/cadastro/unidade
 content-type: application/json
 X-API-Key:123456

@@ -8,7 +8,7 @@ import (
 
 type UnidadeRepository struct {
 	pkg.RepositoryBase[entity.Unidade]
-	Db *gorm.DB
+	//Db *gorm.DB
 }
 
 func NewUnidadeRepository(db *gorm.DB) *UnidadeRepository {

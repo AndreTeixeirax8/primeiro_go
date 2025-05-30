@@ -69,7 +69,7 @@ func (h *UnidadeHandler) GetUnidadeByPaginated(w http.ResponseWriter, r *http.Re
 
 	paginationRequest := pagination.GeneratePaginationRequest(query)
 
-	output, err := h.getUnidadePaginatedUsecase.Execute(*paginationRequest)
+	output, err := h.getUnidadePaginatedUsecase.Execute(paginationRequest)
 
 	return output, http.StatusOK, err
 

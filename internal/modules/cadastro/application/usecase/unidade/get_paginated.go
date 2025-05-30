@@ -5,10 +5,6 @@ import (
 	"github.com/primeiro/pkg/pagination"
 )
 
-type GetUnidadePaginatedInputDTO struct {
-	ID string `json:"id"` // ID da unidade
-}
-
 type GetUnidadePaginatedOutputDTO struct {
 	ID       string `json:"id"`        // ID da unidade
 	Nome     string `json:"nome"`      // Nome da unidade
@@ -24,7 +20,29 @@ func NewGetUnidadePaginatedUsecase(repo domain.UnidadeRepository) *GetUnidadePag
 	return &GetUnidadePaginatedUsecase{repo: repo}
 }
 
-func (uc *GetUnidadePaginatedUsecase) Execute(input pagination.PaginationQuery) (*GetUnidadePaginatedOutputDTO, error) {
+func (uc *GetUnidadePaginatedUsecase) Execute(input *pagination.PaginationQuery) (*pagination.PaginationResponse[GetUnidadePaginatedOutputDTO], error) {
+
+	ret, err := uc.repo.GetPaginated(input)
+	if err != nil {
+		return nil, err
+	}
+
+	rows := make([]GetUnidadePaginatedOutputDTO, len(ret.Rows))
+	for i, unidade := range ret.Rows {
+		rows[i] = GetUnidadePaginatedOutputDTO{
+			ID:       unidade.ID,
+			Nome:     unidade.Nome,
+			Cnpj:     unidade.Cnpj,
+			Email:    unidade.Email,
+			QtdSilos: unidade.QtdSilos,
+		}
+	}
+
+	return &pagination.PaginationResponse[GetUnidadePaginatedOutputDTO]{
+		Rows: rows,
+		Meta: ret.Meta,
+	}, nil
+
 	/*
 		unidade, err := uc.repo.GetPaginated(input.ID)
 		if err != nil {
