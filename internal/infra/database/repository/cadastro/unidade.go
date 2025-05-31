@@ -9,11 +9,13 @@ import (
 type UnidadeRepository struct {
 	pkg.RepositoryBase[entity.Unidade]
 	//Db *gorm.DB
+	SearchExpression string
 }
 
 func NewUnidadeRepository(db *gorm.DB) *UnidadeRepository {
 	return &UnidadeRepository{
-		RepositoryBase: pkg.RepositoryBase[entity.Unidade]{Db: db},
+		RepositoryBase:   pkg.RepositoryBase[entity.Unidade]{Db: db},
+		SearchExpression: "lower(nome) LIKE '%' || lower(?) || '%'",
 	}
 }
 

@@ -17,7 +17,8 @@ type RepositoryBaseInterface[E interface{}] interface {
 }
 
 type RepositoryBase[E interface{}] struct {
-	Db *gorm.DB
+	Db               *gorm.DB
+	SearchExpression string
 }
 
 func (r *RepositoryBase[E]) Create(entity *E) (*E, error) {
@@ -83,6 +84,11 @@ func (r *RepositoryBase[E]) GetPaginated(query *pagination.PaginationQuery) (*pa
 		case "ne":
 			find = find.Where(filter.Field+" != ?", filter.Value)
 		}
+	}
+
+	if (r.SearchExpression != "") && (query.Search != "") {
+		find = find.Where(r.SearchExpression, query.Search)
+
 	}
 
 	var totalRows int64
