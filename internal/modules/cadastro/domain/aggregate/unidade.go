@@ -22,6 +22,10 @@ func NewUnidade(nome, cnpj, email string) (*Unidade, error) {
 	return unidadeAggregate, nil
 }
 
+func (u *Unidade) GetUnidade() *entity.Unidade {
+	return &u.Unidade
+}
+
 func (u *Unidade) AddContato(nome, email string) error {
 
 	contato, err := entity.NewContato(u.ID, nome, email)

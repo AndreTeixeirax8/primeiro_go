@@ -12,26 +12,30 @@ import (
 )
 
 type UnidadeHandler struct {
-	createUnidadeUsecase       *usecase.CreateUnidadeUseCase
-	getUnidadeByIdUsecase      *usecase.GetUnidadeByIdUsecase
-	listUnidadeUsecase         *usecase.ListUnidadeUsecase
-	getUnidadePaginatedUsecase *usecase.GetUnidadePaginatedUsecase
+	createUnidadeUsecase          *usecase.CreateUnidadeUseCase
+	createUnidadeAggregateUsecase *usecase.CreateUnidadeAggregateUseCase
+	getUnidadeByIdUsecase         *usecase.GetUnidadeByIdUsecase
+	listUnidadeUsecase            *usecase.ListUnidadeUsecase
+	getUnidadePaginatedUsecase    *usecase.GetUnidadePaginatedUsecase
 }
 
 func NewUnidadeHandler() *UnidadeHandler {
 
 	unidadeRepo := repository.NewUnidadeRepository(database.DB)
+	contatoRepo := repository.NewContatoRepository(database.DB)
 
 	createUnidadeUsecase := usecase.NewCreateUnidadeUseCase(unidadeRepo)
+	createUnidadeAggregateUsecase := usecase.NewCreateUnidadeAggregateUseCase(unidadeRepo, contatoRepo)
 	getUnidadeByIdUsecase := usecase.NewGetUnidadeByIdUsecase(unidadeRepo)
 	listUnidadeUsecase := usecase.NewListUnidadesUsecase(unidadeRepo)
 	getUnidadePaginatedUsecase := usecase.NewGetUnidadePaginatedUsecase(unidadeRepo)
 
 	return &UnidadeHandler{
-		createUnidadeUsecase:       createUnidadeUsecase,
-		getUnidadeByIdUsecase:      getUnidadeByIdUsecase,
-		listUnidadeUsecase:         listUnidadeUsecase,
-		getUnidadePaginatedUsecase: getUnidadePaginatedUsecase,
+		createUnidadeUsecase:          createUnidadeUsecase,
+		createUnidadeAggregateUsecase: createUnidadeAggregateUsecase,
+		getUnidadeByIdUsecase:         getUnidadeByIdUsecase,
+		listUnidadeUsecase:            listUnidadeUsecase,
+		getUnidadePaginatedUsecase:    getUnidadePaginatedUsecase,
 	}
 }
 
@@ -43,6 +47,18 @@ func (h *UnidadeHandler) CreateUnidade(w http.ResponseWriter, r *http.Request) (
 	}
 
 	output, err := h.createUnidadeUsecase.Execute(&input)
+
+	return output, http.StatusCreated, err
+}
+
+func (h *UnidadeHandler) CreateUnidadeAggregate(w http.ResponseWriter, r *http.Request) (interface{}, int, error) {
+	var input usecase.CreateUnidadeAggregateInputDTO
+
+	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
+		return nil, http.StatusBadRequest, err
+	}
+
+	output, err := h.createUnidadeAggregateUsecase.Execute(&input)
 
 	return output, http.StatusCreated, err
 }

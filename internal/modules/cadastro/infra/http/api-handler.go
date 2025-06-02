@@ -40,6 +40,7 @@ func (s *ApiHttpHandler) RunCadastroApi() {
 		r.Use(middleware.ApiKey)
 		r.Route("/unidade", func(r chi.Router) {
 			r.Post("/", wrapper.HandleError(unidadeHandler.CreateUnidade))
+			r.Post("/aggregate", wrapper.HandleError(unidadeHandler.CreateUnidadeAggregate))
 			r.Get("/", wrapper.HandleError(unidadeHandler.ListUnidades))
 			r.Get("/{id}", wrapper.HandleError(unidadeHandler.GetUnidadeById))
 			r.Get("/paginated", wrapper.HandleError(unidadeHandler.GetUnidadeByPaginated))

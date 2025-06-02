@@ -8,7 +8,9 @@ import (
 )
 
 type RepositoryBaseInterface[E interface{}] interface {
+	BeginTx() *gorm.DB
 	Create(unidade *E) (*E, error)
+	CreateTx(unidade *E, tx *gorm.DB) error
 	GetByID(id string) (*E, error)
 	GetAll() ([]E, error)
 	Update(unidade *E) (*E, error)
@@ -126,4 +128,12 @@ func (r *RepositoryBase[E]) GetPaginated(query *pagination.PaginationQuery) (*pa
 		return nil, err
 	}
 	return entities, nil*/
+}
+
+func (r *RepositoryBase[E]) CreateTx(entity *E, tx *gorm.DB) error {
+	return tx.Create(entity).Error
+}
+
+func (r *RepositoryBase[E]) BeginTx() *gorm.DB {
+	return r.Db.Begin()
 }
