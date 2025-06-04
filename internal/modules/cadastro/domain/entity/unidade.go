@@ -14,6 +14,7 @@ type Unidade struct {
 	Cnpj       *valueobject.CNPJ `json:"cnpj"`                       // CNPJ da unidade
 	Email      string            `json:"email" validate:"email"`     // Email da unidade
 	QtdSilos   int               `json:"qtd_silos" validate:"min=0"` // Quantidade de silos
+	Contatos   []Contato         `json:"contatos`
 }
 
 func (Unidade) TableName() string {

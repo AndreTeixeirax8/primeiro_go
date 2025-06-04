@@ -10,7 +10,7 @@ type Contato struct {
 	gorm.Model          // Embedding gorm.Model for ID, CreatedAt, UpdatedAt, DeletedAt
 	ID         string   `json:"id"` // ID da unidade
 	UnidadeID  string   `json:"unidade_id"`
-	Unidade    *Unidade `gorm:"foreignKey:UnidadeID" json:"unidade"`
+	Unidade    *Unidade ` json:"unidade"`
 	Nome       string   `json:"nome" validate:"required,min=3,max=100"`
 	Email      string   `json:"email" validate:"email"` // Email da unidade
 

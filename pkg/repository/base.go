@@ -15,7 +15,7 @@ type RepositoryBaseInterface[E interface{}] interface {
 	GetAll() ([]E, error)
 	Update(unidade *E) (*E, error)
 	Delete(id string) error
-	GetPaginated(query *pagination.PaginationQuery) (*pagination.PaginationResponse[E], error)
+	GetPaginated(query *pagination.PaginationQuery, preloads ...string) (*pagination.PaginationResponse[E], error)
 }
 
 type RepositoryBase[E interface{}] struct {
@@ -63,10 +63,14 @@ func (r *RepositoryBase[E]) Delete(id string) error {
 	return r.Db.Delete(&entity).Error
 }
 
-func (r *RepositoryBase[E]) GetPaginated(query *pagination.PaginationQuery) (*pagination.PaginationResponse[E], error) {
+func (r *RepositoryBase[E]) GetPaginated(query *pagination.PaginationQuery, preloads ...string) (*pagination.PaginationResponse[E], error) {
 	var entities []E
 
 	find := r.Db.Order(query.Sort)
+
+	for _, preload := range preloads {
+		find = find.Preload(preload)
+	}
 
 	filters := query.Filters
 	for _, filter := range filters {
