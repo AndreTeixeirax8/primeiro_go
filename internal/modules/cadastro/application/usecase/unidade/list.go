@@ -31,7 +31,7 @@ func (uc *ListUnidadeUsecase) Execute() (*[]ListUnidadeOutputDTO, error) {
 		rows[i] = ListUnidadeOutputDTO{
 			ID:       unidade.ID,
 			Nome:     unidade.Nome,
-			Cnpj:     unidade.Cnpj,
+			Cnpj:     unidade.Cnpj.String(),
 			Email:    unidade.Email,
 			QtdSilos: unidade.QtdSilos,
 		}

@@ -13,8 +13,9 @@ content-type: application/json
 X-API-Key:123456
 
 {
-    "Nome": "Unidade_03",
-    "Email":"teste@testes.com"
+    "Nome": "Unidade_04",
+    "Email":"teste@testes.com",
+    "Cnpj":"25158545000151"
 }
 
 ###

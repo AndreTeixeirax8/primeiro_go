@@ -33,7 +33,7 @@ func (uc *GetUnidadeByIdUsecase) Execute(input *GetUnidadeByIdInputDTO) (*GetUni
 	return &GetUnidadeByIdOutputDTO{
 		ID:       unidade.ID,
 		Nome:     unidade.Nome,
-		Cnpj:     unidade.Cnpj,
+		Cnpj:     unidade.Cnpj.String(),
 		Email:    unidade.Email,
 		QtdSilos: unidade.QtdSilos,
 	}, nil

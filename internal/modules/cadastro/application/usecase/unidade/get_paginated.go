@@ -32,7 +32,7 @@ func (uc *GetUnidadePaginatedUsecase) Execute(input *pagination.PaginationQuery)
 		rows[i] = GetUnidadePaginatedOutputDTO{
 			ID:       unidade.ID,
 			Nome:     unidade.Nome,
-			Cnpj:     unidade.Cnpj,
+			Cnpj:     unidade.Cnpj.String(),
 			Email:    unidade.Email,
 			QtdSilos: unidade.QtdSilos,
 		}
